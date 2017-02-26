@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/tvId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id_ca_ba_in_case1234"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_gravity="start"
+        android:layout_margin="@dimen/text_margin" />
+
+    <TextView
+        android:id="@+id/tvArticleDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01/01/2015"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorBlackText"
+        android:layout_gravity="end"
+        android:layout_alignTop="@+id/tvId"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/text_margin" />
+
+    <ImageView
+        android:id="@+id/ivArticle"
+        android:layout_height="@dimen/image_size_port"
+        android:layout_width="match_parent"
+        android:contentDescription="TODO: contentDescription"
+        android:src="@drawable/ic_setting_light"
+        android:layout_gravity="top"
+        android:layout_below="@+id/tvArticleDate"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/item_margin" />
+
+    <TextView
+        android:id="@+id/tvArticleTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlackText"
+        android:text="...Article Title......Article Title......Article Title......Article Title......Article Title......Article Title..."
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/ivArticle"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/item_margin"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/tvTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Таг..., Таг..., Таг..., Таг..., Таг"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_gravity="start"
+        android:layout_below="@+id/tvArticleTitle"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

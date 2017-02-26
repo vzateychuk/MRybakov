@@ -1,0 +1,27 @@
+<resources>
+
+    <!--
+    Layout alias to replace the single-pane version of the layout with a
+    two-pane version on Large screens.
+
+    For more on layout aliases, see:
+    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+    -->
+    <item name="headlines" type="layout">
+        @layout/headlines_layout
+    </item>
+    <item name="item_article" type="layout">
+        @layout/item_article_port
+    </item>
+    <item name="article_view" type="layout">
+        @layout/article_layout
+    </item>
+    <item name="main_layout" type="layout">
+        @layout/content_main_twopane
+    </item>
+
+    <bool name="has_two_panes">
+        true
+    </bool>
+
+</resources>

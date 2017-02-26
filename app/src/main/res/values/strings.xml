@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Михаил Рыбаков и Партнеры</string>
+    <string name="app_label">Михаил Рыбаков</string>
+    <string name="app_initial_text01">Наши авторские статьи</string>
+    <string name="app_initial_text02">Свыше 100 000 подписчиков\nЕженедельно с 2007 года</string>
+
+    <string name="contact_phone">"+7 (495) 926-26-09"</string>>
+    <string name="web_site">"www.mrybakov.ru"</string>>
+
+    <string name="app_developer">Разработка: vzateychuk@gmail.com</string>
+    <string name="init_dialog_message">Запуск приложения...</string>
+    <string name="initialization_error_text">Произошла ошибка, переустановите приложение...</string>
+    <string name="no_external_card_installed">Недоступна карта памяти.</string>
+    <string name="initial_dialog_bb_ok">Да</string>
+    <string name="initial_dialog_bb_cancel">Отмена</string>
+
+
+    <string name="version_name">Version name: </string>
+    <string name="version_code">Версия N: </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_article">Наши статьи</string>
+    <string name="action_schedule">Расписание</string>
+    <string name="action_about">О нас</string>
+
+    <string name="caption_filter">Рубрикатор</string>
+    <string name="action_by_category">По темам</string>
+    <string name="action_by_author">По авторам</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name="caption_communicate">Общение</string>
+    <string name="action_share">Мы в Facebook</string>
+    <string name="action_send_message">Напишите нам</string>
+    <string name="action_search">Найти</string>
+    <string name="snackbar_action">Отменить</string>
+
+
+    <string name="email_contacts">info@mrybakov.ru</string>
+    <string name="email_subject">Вопрос Михаилу Рыбакову.</string>
+    <string name="email_body">Добрый день, Михаил.\n\n ---\nС уважением, \n\n...\n\nПисьмо отправлено из мобильного приложения «Михаил Рыбаков и Партнеры» для Андроид.</string>
+    <string name="email_warning">Произошла ошибка: не настроена программа сообщений. Свяжитесь с нами по телефону +7 (495) 926-26-09.</string>
+
+
+    <string name="footer_text">Вернуться к первой статье...</string>
+    <string name="warning_call_in_progress">Идет загрузка...</string>
+    <string name="warning_download_failed">Загрузка оборвалась...</string>
+    <string name="warning_download_succes">Загружена новая статья ...</string>
+
+    <array name="array_category_options">
+        <item>Наведение порядка в бизнесе</item>
+        <item>Маркетинг</item>
+        <item>Продажи</item>
+        <item>Персонал</item>
+        <item>Финансы</item>
+        <item>Новый бизнес</item>
+        <item>Гармония в бизнесе и жизни</item>
+        <item>Государство, общество</item>
+    </array>
+
+    <array name="array_category_tags">
+        <item>порядок</item>
+        <item>маркетинг</item>
+        <item>продажи</item>
+        <item>персонал</item>
+        <item>финансы</item>
+        <item>start-up</item>
+        <item>гармония</item>
+        <item>государство</item>
+    </array>
+
+    <array name="array_authors_options">
+        <item>Михаил Рыбаков</item>
+        <item>Ольга Пайвина</item>
+        <item>Виктор Лучков</item>
+        <item>Екатерина Козырева</item>
+        <item>Наталия Морозова</item>
+        <item>Любовь Малютина</item>
+    </array>
+
+    <string name="notification_title">Новый материал...</string>
+    <string name="notification_text">Читать новый материал.</string>
+    <string name="http_facebook">https://www.facebook.com/BusinessToOrder</string>
+
+
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:background="@drawable/side_nav_bar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
+    android:weightSum="1"
+    >
+
+    <TextView
+        android:id="@+id/tvAppName"
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/nav_header_vertical_spacing"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_logo"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/tvAppName"
+        android:layout_margin="@dimen/nav_header_vertical_spacing"
+        android:layout_alignLeft="@+id/tvAppName"
+        android:layout_alignStart="@+id/tvAppName"
+        />
+
+    <TextView
+        android:id="@+id/tv_website"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/web_site"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/tvAppName"
+        android:layout_toRightOf="@+id/ivLogo"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:layout_marginLeft="@dimen/nav_header_horizontal_spacing"
+        />
+
+    <TextView
+        android:id="@+id/tv_contact_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_phone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/tv_website"
+        android:layout_toRightOf="@+id/ivLogo"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:layout_marginLeft="@dimen/nav_header_horizontal_spacing"
+        />
+
+    <TextView
+        android:id="@+id/tv_contact_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email_contacts"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/tv_contact_phone"
+        android:layout_toRightOf="@+id/ivLogo"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:layout_marginLeft="@dimen/nav_header_horizontal_spacing"
+        />
+
+</RelativeLayout>
+
+

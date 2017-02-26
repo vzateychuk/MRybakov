@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_articles"
+            android:icon="@mipmap/ic_book_open_variant_white_24dp"
+            android:title="@string/action_article" />
+
+        <item
+            android:id="@+id/nav_by_category"
+            android:icon="@mipmap/ic_note_text_white_24dp"
+            android:title="@string/action_by_category" />
+
+        <item
+            android:id="@+id/nav_by_author"
+            android:icon="@mipmap/ic_account_multiple_outline_white_24dp"
+            android:title="@string/action_by_author" />
+
+    </group>
+
+    <group>
+            <item
+                android:id="@+id/nav_schedule"
+                android:icon="@mipmap/ic_schedule_white_24dp"
+                android:title="@string/action_schedule" />
+
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/ic_school_white_24dp"
+                android:title="@string/action_about" />
+    </group>
+
+    <group>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@android:drawable/ic_dialog_email"
+                android:title="@string/action_send_message" />
+
+            <item
+                android:id="@+id/nav_facebook"
+                android:icon="@mipmap/ic_school_white_24dp"
+                android:title="@string/action_share" />
+    </group>
+</menu>
+
+    <!--
+
+    <item android:title="@string/action_by_category">
+    </item>
+    <item android:title="@string/caption_filter">
+        <menu>
+                <item
+                android:id="@+id/nav_setting"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="@string/action_settings" />
+        </menu>
+    </item>
+
+    <item android:title="@string/caption_communicate">
+        <menu>
+
+        </menu>
+    </item>
+
+
+  -->
