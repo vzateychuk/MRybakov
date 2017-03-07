@@ -6,5 +6,7 @@
 *.iml
 *.swp
 *.bat
+*.apk
+*.json
 /.idea
 /gradle

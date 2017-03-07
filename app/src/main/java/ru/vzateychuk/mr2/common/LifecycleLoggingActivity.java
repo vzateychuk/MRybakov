@@ -25,14 +25,14 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Always call super class for necessary
-        // initialization/implementation.
+        // Always call super class for necessary initialization/implementation.
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            // The activity is being re-created. Use the
-            // savedInstanceState bundle for initializations either
-            // during onCreate or onRestoreInstanceState().
+            /**
+             *  The activity is being re-created. Use the savedInstanceState bundle for initializations
+             *  either during onCreate or onRestoreInstanceState().
+             */
             Log.d(TAG, "onCreate(): activity re-created");
 
         } else {

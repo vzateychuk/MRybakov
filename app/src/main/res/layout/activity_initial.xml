@@ -29,20 +29,29 @@
         android:layout_marginTop="16dp"
         />
 
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvContactPhone"
+        android:layout_marginBottom="16dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_logo" />
+
     <TextView
-        android:id="@+id/tvInitial"
+        android:id="@+id/tvContactPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom|center_horizontal"
         android:text="@string/contact_phone"
         android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_above="@+id/tvVersionCode"
+        android:layout_above="@+id/tvWebSite"
         android:layout_marginBottom="16dp"
         />
 
     <TextView
-        android:id="@+id/tvVersionCode"
+        android:id="@+id/tvWebSite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom|center_horizontal"
@@ -52,13 +61,5 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_logo" />
 
 </RelativeLayout>

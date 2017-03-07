@@ -25,7 +25,6 @@ import ru.vzateychuk.mr2.model.Article;
 import ru.vzateychuk.mr2.model.DBHelper;
 import ru.vzateychuk.mr2.ops.AlarmNotificationReceiver;
 import ru.vzateychuk.mr2.retrofit.IWebServiceAPI;
-import ru.vzateychuk.mr2.view.InitialActivity;
 import ru.vzateychuk.mr2.view.MainActivity;
 
 /**
@@ -36,7 +35,6 @@ import ru.vzateychuk.mr2.view.MainActivity;
  */
 public class DownloadDataStartedService extends IntentService {
 
-    // debug purpose only
     private final static String TAG = DownloadDataStartedService.class.getSimpleName();
 
     // IntentService can perform, e.g. ACTION_DOWNLOAD
@@ -52,6 +50,10 @@ public class DownloadDataStartedService extends IntentService {
     private static final int MY_NOTIFICATION_ID = 1001;
     // Vibrate pattern used when notification arrived
     private final long[] mVibratePattern = { 0, 200, 200, 300 };
+
+    //  default epoch timestamp 1357002061 = 01/01/2013
+    public static final long TIMESTAMP_DEFAULT = 1357002061000l;
+
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -93,7 +95,7 @@ public class DownloadDataStartedService extends IntentService {
 
             if (ACTION_DOWNLOAD.equals(action)) {
                 // get long_timestamp from Intent
-                Long ltimestamp = intent.getLongExtra(EXTRA_TIMESTAMP, InitialActivity.TIMESTAMP_DEFAULT);
+                Long ltimestamp = intent.getLongExtra(EXTRA_TIMESTAMP, TIMESTAMP_DEFAULT);
                 // convert to string representation
                 String stimestamp = convertFromLongToString(ltimestamp);
                 // download articles from web
@@ -129,15 +131,12 @@ public class DownloadDataStartedService extends IntentService {
                     }
 
 
-                    // create and send broadcast message with flag that new data just arrived
-                    // createAndSendBroadcastMessage();
                     /**
                      * Create and send broadcast message with flag that new data just arrived.
                      * This notifies the user that the new Articles is arrived by sends
                      * an ordered broadcast to the BroadcastReceiver in ActicleOps.class
                      */
                     broadcastDownloadCompeted(articles);
-                    // createNotification(getApplicationContext());
 
                 }
             }
