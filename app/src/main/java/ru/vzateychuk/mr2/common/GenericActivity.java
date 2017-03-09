@@ -1,6 +1,5 @@
 package ru.vzateychuk.mr2.common;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -34,27 +33,16 @@ public class GenericActivity<OpsType extends IConfigurableOps>
      * @param opsType            Class object that's used to create an operations ("Ops") object.
      */
     public void onCreate(Bundle savedInstanceState,
-                         Class<OpsType> opsType) {
+                         Class<OpsType> opsType) throws IllegalAccessException, InstantiationException
+    {
         // Call up to the super class.
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
 
-        try {
             // Handle configuration-related events, including the
             // initial creation of an Activity and any subsequent
             // runtime configuration changes.
-            handleConfiguration(opsType);
-
-        } catch (InstantiationException e) {
-            Log.e(TAG, "onCreate(): InstantiationException on handleConfiguration " + e);
-            // Propagate this as a runtime exception.
-            throw new RuntimeException(e);
-
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, "onCreate(): IllegalAccessException on handleConfiguration " + e);
-            // Propagate this as a runtime exception.
-            throw new RuntimeException(e);
-        }
+        handleConfiguration(opsType);
     }
 
     /**
@@ -64,33 +52,21 @@ public class GenericActivity<OpsType extends IConfigurableOps>
      * @throws InstantiationException
      */
     public void handleConfiguration(Class<OpsType> opsType)
-            throws InstantiationException, IllegalAccessException {
+            throws InstantiationException, IllegalAccessException
+    {
 
         // If this method returns true it's the first time the
         // Activity has been created.
-        if (mRetainedFragmentManager.firstTimeIn()) {
-            Log.d(TAG, "First time onCreate() call");
-
-            // CopyFilesFromAssets the GenericActivity fields.
+        if (mRetainedFragmentManager.firstTimeIn())
+        {
             initialize(opsType);
         } else {
             // The RetainedFragmentManager was previously initialized,
             // which means that a runtime configuration change occured.
-            Log.d(TAG, "Second or subsequent onCreate() call");
-
             // Try to obtain the OpsType instance from the RetainedFragmentManager.
             mOpsInstance = mRetainedFragmentManager.get(opsType.getSimpleName());
 
-            // This check shouldn't be necessary under normal
-            // circumstances, but it's better to lose state than to
-            // crash!
-            if (mOpsInstance == null)
-                // CopyFilesFromAssets the GenericActivity fields.
-                initialize(opsType);
-            else
-                // Inform it that the runtime configuration change has
-                // completed.
-                mOpsInstance.onConfiguration(this, false);
+            mOpsInstance.onConfiguration(this, false);
         }
     }
 
@@ -101,7 +77,8 @@ public class GenericActivity<OpsType extends IConfigurableOps>
      * @throws InstantiationException
      */
     private void initialize(Class<OpsType> opsType)
-            throws InstantiationException, IllegalAccessException {
+            throws InstantiationException, IllegalAccessException
+    {
         // Create the OpsType object.
         mOpsInstance = opsType.newInstance();
 
@@ -118,15 +95,4 @@ public class GenericActivity<OpsType extends IConfigurableOps>
         return mOpsInstance;
     }
 
-    // Return the initialized FragmentManager for use by the application.
-    public RetainedFragmentManager getRetainedFragmentManager() {
-        return mRetainedFragmentManager;
-    }
-
-    /**
-     * Return the Activity context.
-     */
-    public Context getActivityContext() {
-        return this;
-    }
 }

@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -45,10 +44,7 @@ public class MainActivity extends GenericActivity<ArticlesOps>
             View.OnClickListener
 {
 
-    /**
-    * reference for fragments used:
-    * list of Articles - HeadlinesFragment
-    */
+    // reference for fragments used: list of Articles - HeadlinesFragment
     private HeadlinesFragment mHeadlinesFragment;
 
     // current applyFilter for displayed articles. initiated with empty values
@@ -57,29 +53,29 @@ public class MainActivity extends GenericActivity<ArticlesOps>
     // position indicates when user selected the article
     private int mPosition;
     
-    private final String TAG_SELECTED_POSITION = "ru.vzateychuk.mr2.view.SELECTED_POSITION";
+    private static final String TAG_SELECTED_POSITION = "ru.vzateychuk.mr2.view.SELECTED_POSITION";
 
     // status indicates that ArticleActivity is shown on the front
-    public static final int IS_ALIVE = 1;
-
-    // this for broadcast message when the data will be downloaded by AlarmNotificationRecieiver
-    public final static String TAG_ALARM_TIME_TO_CHECK_ACTION = "ru.vazateychuk.mr2.ALARM_TIME_TO_CHECK_ACTION";
+    public static int IS_ALIVE = 1;
 
     // Receives broadcast and setResult indicates that Activity is alive
     private BroadcastReceiver mRefreshReceiver;
 
     @SuppressLint("MissingSuperCall")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState)
+    {
         /**
-         * Invoke the special onCreate() method in GenericActivity,
-         * passing in the ArticleOps class to instantiate/manage.
-         * And  "this" to provide ArticleOps MainActivity instance.
-         * super.onCreate(savedInstanceState);
+         * Invoke the special onCreate() method in GenericActivity, passing in the ArticleOps class to instantiate/manage.
+         * And  "this" to provide ArticleOps MainActivity instance. super.onCreate(savedInstanceState);
          */
-        super.onCreate(savedInstanceState,
-                ArticlesOps.class);
+        try {
+            super.onCreate(savedInstanceState, ArticlesOps.class);
+        } catch (IllegalAccessException e) {
+            Log.d( TAG, "IllegalAccessException e=" + e );
+        } catch (InstantiationException e) {
+            Log.d( TAG, "InstantiationException e=" + e );
+        }
 
         // Get references to the UI components.
         setContentView(R.layout.activity_main);
@@ -98,46 +94,34 @@ public class MainActivity extends GenericActivity<ArticlesOps>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // thereis some trouble to find the HeaderView from Navigation
-        // I use the solution: http://stackoverflow.com/questions/32246360/how-to-get-view-from-drawer-header-layout-with-binding-in-activity
+        // HeaderView from Navigation: http://stackoverflow.com/questions/32246360/how-to-get-view-from-drawer-header-layout-with-binding-in-activity
         View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        ImageView ivLogo = (ImageView) headerView.findViewById(R.id.ivLogo);
-
-
-        // try open link when user click on header view
         headerView.setOnClickListener(this);
 
 
         // Setup headlines fragment if the Activity created at the first time
         if (savedInstanceState == null) {
-
-            // setup fragments
             setupFragments();
-
-            // open drawer when the application starts
             drawer.openDrawer(GravityCompat.START);
         } else {
-            Log.d(TAG, "onCreate(), looking for a mHeadlinesFragment");
-
             // Restore saved instance state (on reconfiguration find current mHeadlinesFragment by Tag)
             mHeadlinesFragment = (HeadlinesFragment) getSupportFragmentManager().findFragmentByTag(HeadlinesFragment.class.getName());
-
             // restore selected position from savedInstance
             mPosition = savedInstanceState.getInt(TAG_SELECTED_POSITION);
         }
+
         // if in two_pane_mode, select previously selected article (0 by default)
-        if (isInTwoPaneMode()) onSelectedListener(mPosition);
+        if ( isInTwoPaneMode() ) {
+            onSelectedListener(mPosition);
+        }
 
-        // create new mRefreshReceiver for orderedBroadcast
         setBroadcastReciever();
-
     }
 
     // hide drawer on back pressed
     @Override
-    public void onBackPressed() {
-        Log.d(TAG, "onBackPressed()");
-
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -150,76 +134,48 @@ public class MainActivity extends GenericActivity<ArticlesOps>
     * This method called when user clicks on item on Navigation bar
     * */
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        Log.d(TAG, "onNavigationItemSelected()");
-
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         String title;
 
-        switch (id) {
-            // display articles
-            case R.id.nav_articles:
-                // toast message to be displayed
-                title = getString(R.string.action_article);
-                // refresh data on headlines
-                refreshData(id, "", title);
-                break;
-
-            // display schedules
+        switch (id)
+        {
             case R.id.nav_schedule:
-                // toast message to be displayed
                 title = getString(R.string.action_schedule);
-                // refresh data on headlines
                 refreshData(id, "", title);
                 break;
-
-            // display our team page
             case R.id.nav_about:
-                // toast message to be displayed
                 title = getString(R.string.action_about);
-                // refresh data on headlines
                 refreshData(id, "", title);
                 break;
-
-            // display with filter by author
             case R.id.nav_by_author:
-                // toast message to be displayed
-                title = getString(R.string.action_article)
-                        + " "
-                        + getString(R.string.action_by_author).toLowerCase();
-                // display dialog for selection appropriate filter value
+                title = getString(R.string.action_article) + " " + getString(R.string.action_by_author).toLowerCase();
                 showDialog(title,
                         getResources().getStringArray(R.array.array_authors_options),
                         getResources().getStringArray(R.array.array_authors_options));
                 break;
-
-            // display with filter by category
             case R.id.nav_by_category:
-                title = getString(R.string.action_article)
-                        + " "
-                        + getString(R.string.action_by_category).toLowerCase();
-                // display dialog for selection appropriate filter value
+                title = getString(R.string.action_article) + " " + getString(R.string.action_by_category).toLowerCase();
                 showDialog(title,
                         getResources().getStringArray(R.array.array_category_options),
                         getResources().getStringArray(R.array.array_category_tags));
                 break;
-
-            // start facebook page when user clicks
             case R.id.nav_facebook:
                 String sUrl = this.getString(R.string.http_facebook);
                 Uri address = Uri.parse(sUrl);
-                Intent openlink = new Intent(Intent.ACTION_VIEW, address);
-                startActivity(openlink);
+                startActivity(new Intent(Intent.ACTION_VIEW, address));
                 break;
-
-            // create and send new message (email/sms)
             case R.id.nav_send:
                 makeMessage();
                 break;
+            default:
+                title = getString(R.string.action_article);
+                refreshData(id, "", title);
+                break;
         }
-
 
         // hiding the drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -232,7 +188,7 @@ public class MainActivity extends GenericActivity<ArticlesOps>
             Fragment fragment =  getSupportFragmentManager().findFragmentById(R.id.fragment_container_headline);
             if (fragment instanceof ArticleFragment) {
                 Log.d(TAG, "onNavigationItemSelected(): fragment instanceof ArticleFragment, => onBackPressed()");
-                // this.onBackPressed();
+
                 getSupportFragmentManager().beginTransaction().replace(
                         R.id.fragment_container_headline,
                         mHeadlinesFragment,
@@ -244,14 +200,12 @@ public class MainActivity extends GenericActivity<ArticlesOps>
     }
 
     /**
-    // The user selected the headline of an article from the HeadlinesFragment
-    // Do something here to display that article
-    // method implements OnFragmentInteractionListener.onSelectedListener interface
+     * The user selected the headline of an article from the HeadlinesFragment
+     * Do something here to display that article method implements OnFragmentInteractionListener.onSelectedListener interface
      */
     @Override
-    public void onSelectedListener(int position) {
-        Log.d(TAG, ".onSelectedListener(): position=" + position);
-
+    public void onSelectedListener(int position)
+    {
         // get article from Ops
         Article article = getOps().getArticle(position);
 
@@ -291,12 +245,11 @@ public class MainActivity extends GenericActivity<ArticlesOps>
      * @param results List of Articles to display.
      */
     public void updateHeadlinesView(List<Article> results,
-                                    String errorMessage) {
-        Log.d(TAG, "updateHeadlinesView()");
-
-        if (results == null || results.size() == 0)
+                                    String errorMessage)
+    {
+        if ( results == null || results.isEmpty() ) {
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-        else {
+        } else {
             Log.d(TAG, "updateHeadlinesView() with number of Articles = " + results.size());
 
             // if headlines not null, display articles on headlines fragment
@@ -304,7 +257,9 @@ public class MainActivity extends GenericActivity<ArticlesOps>
                 mPosition = 0;
                 mHeadlinesFragment.displayArticles(results);
                 // if in two_pane_mode, select top article
-                if (isInTwoPaneMode()) onSelectedListener(mPosition);
+                if ( isInTwoPaneMode() ) {
+                    onSelectedListener(mPosition);
+                }
             }
         }
     }
@@ -317,38 +272,33 @@ public class MainActivity extends GenericActivity<ArticlesOps>
      * @param tag - tag selected for filter
      * */
     @Override
-    public void onDialogItemClick(String tag) {
-        Log.d(TAG, "onDialogItemClick(), tag=" + tag);
-
+    public void onDialogItemClick(String tag)
+    {
         // build message to be displayed
-        String message = getString(R.string.warning_call_in_progress)
-                + " "
-                + getString(R.string.action_article).toLowerCase()
-                + " "
-                + tag;
+        String message = getString(R.string.warning_call_in_progress) + " " + getString(R.string.action_article).toLowerCase() + " " + tag;
 
         // refresh headlines according tag provided
         refreshData(R.id.nav_articles, tag, message);
     }
 
-    // Register the BroadcastReceiver
+    // Register the BroadcastReceiver on Resume
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, ".onResume(); Register the mRefreshReceiver with filter: ");
         // Register the BroadcastReceiver to receive a DATA_REFRESHED_ACTION broadcast
         IntentFilter filter = new IntentFilter(AlarmNotificationReceiver.ALARM_TO_CHECK_NEW_DATA);
-        if (null != mRefreshReceiver) registerReceiver(mRefreshReceiver, filter);
+        if (null != mRefreshReceiver) {
+            registerReceiver(mRefreshReceiver, filter);
+        }
     }
 
     // Unregister the BroadcastReceiver if it has been registered
     @Override
     protected void onPause() {
-        Log.d(TAG, ".onPause(); Unregister the mRefreshReceiver");
-
         // Note: check that mRefreshReceiver is not null before attempting to
-        if (null != mRefreshReceiver) unregisterReceiver(mRefreshReceiver);
-
+        if (null != mRefreshReceiver) {
+            unregisterReceiver(mRefreshReceiver);
+        }
         super.onPause();
     }
 
@@ -358,19 +308,13 @@ public class MainActivity extends GenericActivity<ArticlesOps>
         super.onDestroy();
     }
 
-
-    /**************************************************************************************
-     * ***********************        Private area            *****************************
-     **************************************************************************************/
     // Creating new email message to request
     private void makeMessage() {
-        Log.d(TAG, ".makeMessage(): making new message");
         getOps().makeMessage(this);
     }
 
     // If there is no fragment_container_headline (one pane), then the application is in two-pane mode
     private boolean isInTwoPaneMode() {
-        // return findViewById(R.id.fragment_container_headline) == null;
         return getResources().getBoolean(R.bool.has_two_panes);
     }
 
@@ -380,8 +324,6 @@ public class MainActivity extends GenericActivity<ArticlesOps>
         super.onSaveInstanceState(savedInstanceState);
         // save the position of item selected by user
         savedInstanceState.putInt(TAG_SELECTED_POSITION, mPosition);
-
-        Log.d(TAG, ".onSaveInstanceState()");
     }
 
 
@@ -449,8 +391,10 @@ public class MainActivity extends GenericActivity<ArticlesOps>
         getOps().refreshData(mFilter);
     }
 
-    // creates and initializes Receiver. Receiver lets sender know that the Intent was received by setting result code to IS_ALIVE
-    // the Receiver will be registered in onResume()
+    /**
+     * Creates and initializes Receiver. Receiver lets sender know that the Intent was received by setting
+     * result code to IS_ALIVE the Receiver will be registered in onResume()
+     */
     private void setBroadcastReciever() {
         Log.d(TAG, ".setBroadcastReciever()");
 
@@ -478,7 +422,6 @@ public class MainActivity extends GenericActivity<ArticlesOps>
     public void onClick(View v) {
         String strUrl = "http://" + this.getString(R.string.web_site);
         Uri address = Uri.parse(strUrl);
-        Intent openlink = new Intent(Intent.ACTION_VIEW, address);
-        startActivity(openlink);
+        startActivity( new Intent( Intent.ACTION_VIEW, address ) );
     }
 }

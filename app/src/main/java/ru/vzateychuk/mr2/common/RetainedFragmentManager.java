@@ -1,13 +1,12 @@
 package ru.vzateychuk.mr2.common;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Retains and manages state information between runtime configuration
@@ -15,9 +14,7 @@ import java.util.HashMap;
  * Created by vez on 3.11.15.
  */
 public class RetainedFragmentManager {
-    /**
-     * Debugging tag used by the Android logger.
-     */
+
     protected final String TAG = getClass().getSimpleName();
 
     /**
@@ -39,9 +36,13 @@ public class RetainedFragmentManager {
      * Constructor initializes fields.
      */
     public RetainedFragmentManager(FragmentManager fragmentManager,
-                                   String retainedFragmentTag) {
-        // Store a WeakReference to the Activity.
-        mFragmentManager = new WeakReference<FragmentManager>(fragmentManager);
+                                   String retainedFragmentTag)
+    {
+        if (null==fragmentManager) {
+            throw new NullPointerException("fragmentManager can't be null");
+        }
+        // Store a WeakReference to the FragmentManager.
+        mFragmentManager = new WeakReference<>(fragmentManager);
 
         // Store the tag used to identify the RetainedFragment.
         mRetainedFragmentTag = retainedFragmentTag;
@@ -53,33 +54,18 @@ public class RetainedFragmentManager {
      * @returns true if it's first time the method's been called, else
      * false.
      */
-    public boolean firstTimeIn() {
-        try {
-            // Find the RetainedFragment on Activity restarts.  The
-            // RetainedFragment has no UI so it must be referenced via
-            // a tag.
-            mRetainedFragment = (RetainedFragment)
-                    mFragmentManager.get().findFragmentByTag(mRetainedFragmentTag);
+    public boolean firstTimeIn()
+    {
+         // Find the RetainedFragment on Activity restarts.  The RetainedFragment has no UI so it must be referenced via a tag.
+        mRetainedFragment = (RetainedFragment) mFragmentManager.get().findFragmentByTag(mRetainedFragmentTag);
 
-            // A value of null means it's the first time in, so there's
-            // extra work to do.
-            if (mRetainedFragment == null) {
-                Log.d(TAG, "Creating new RetainedFragment " + mRetainedFragmentTag);
-
-                // Create a new RetainedFragment.
-                mRetainedFragment = new RetainedFragment();
-
-                // Commit this RetainedFragment to the FragmentManager.
-                mFragmentManager.get().beginTransaction().add(mRetainedFragment, mRetainedFragmentTag).commit();
-                return true;
-            }
-            // A value of non-null means it's not first time in.
-            else {
-                Log.d(TAG, "Returning existing RetainedFragment " + mRetainedFragmentTag);
-                return false;
-            }
-        } catch (NullPointerException e) {
-            Log.e(TAG, "NullPointerException in firstTimeIn()");
+        // A value of null means it's the first time in, so Create a new RetainedFragment
+        if (mRetainedFragment == null)
+        {
+            mRetainedFragment = new RetainedFragment();
+            mFragmentManager.get().beginTransaction().add(mRetainedFragment, mRetainedFragmentTag).commit();
+            return true;
+        } else {
             return false;
         }
     }
@@ -92,27 +78,12 @@ public class RetainedFragmentManager {
     }
 
     /**
-     * Add the @a object with its class name.
-     */
-    public void put(Object object) {
-        put(object.getClass().getName(), object);
-    }
-
-    /**
      * Get the object with @a key.
      */
-    @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         return (T) mRetainedFragment.get(key);
     }
 
-    /**
-     * Return the Activity the RetainedFragment is attached to or null
-     * if it's not currently attached.
-     */
-    public Activity getActivity() {
-        return mRetainedFragment.getActivity();
-    }
 
     /**
      * "Headless" Fragment that retains state information between
@@ -123,8 +94,7 @@ public class RetainedFragmentManager {
         /**
          * Maps keys to objects.
          */
-        private HashMap<String, Object> mData =
-                new HashMap<String, Object>();
+        private Map<String, Object> mData = new HashMap<>();
 
         /**
          * Hook method called when a new instance of Fragment is
@@ -148,16 +118,8 @@ public class RetainedFragmentManager {
         }
 
         /**
-         * Add the @a object with its class name.
-         */
-        public void put(Object object) {
-            put(object.getClass().getName(), object);
-        }
-
-        /**
          * Get the object with @a key.
          */
-        @SuppressWarnings("unchecked")
         public <T> T get(String key) {
             return (T) mData.get(key);
         }

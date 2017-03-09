@@ -233,8 +233,7 @@ public class DownloadDataStartedService extends IntentService {
                                 public void onReceive(Context context, Intent intent) {
                                     Log.d(TAG, "OrderedBroadcast.onReceive(); result_code=" + getResultCode());
 
-                                    // Check whether or not the MainActivity  received the broadcast
-                                    // if not, create Notification
+                                    // Check whether or not the MainActivity  received the broadcast if not, create Notification
                                     if (getResultCode() != MainActivity.IS_ALIVE)
                                         DownloadDataStartedService.this.createNotification(context);
                                 }
