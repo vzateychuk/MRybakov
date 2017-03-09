@@ -16,7 +16,8 @@ import ru.vzateychuk.mr2.model.Article;
  * on the IWebServiceAPI' interface methods into HTTP requests on the server. Parameters / return
  * values are being marshaled to/from JSON.
  */
-public class WebServiceAPITest extends TestCase {
+public class WebServiceAPITest extends TestCase
+{
 
     private Retrofit retrofit;
     private IWebServiceAPI webService;

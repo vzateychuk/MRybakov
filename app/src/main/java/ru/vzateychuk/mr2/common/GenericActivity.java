@@ -68,7 +68,7 @@ public class GenericActivity<OpsType extends IConfigurableOps>
 
         // If this method returns true it's the first time the
         // Activity has been created.
-        if (mRetainedFragmentManager.firstTimeIn()) {
+        if (mRetainedFragmentManager.isFirstTime()) {
             Log.d(TAG, "First time onCreate() call");
 
             // CopyFilesFromAssets the GenericActivity fields.

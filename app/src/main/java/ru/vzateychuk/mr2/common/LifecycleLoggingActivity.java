@@ -9,11 +9,12 @@ import android.util.Log;
  * callbacks for logging various lifecycle events.
  * Created by vez on 25.10.15.
  */
-public abstract class LifecycleLoggingActivity extends AppCompatActivity {
+public abstract class LifecycleLoggingActivity extends AppCompatActivity
+{
     /**
      * Debugging tag used by the Android logger.
      */
-    protected final String TAG = getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
 
     /**
      * Hook method called when a new instance of Activity is created. One time
@@ -24,23 +25,15 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * @param savedInstanceState object that contains saved state information.
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // Always call super class for necessary initialization/implementation.
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            /**
-             *  The activity is being re-created. Use the savedInstanceState bundle for initializations
-             *  either during onCreate or onRestoreInstanceState().
-             */
             Log.d(TAG, "onCreate(): activity re-created");
-
         } else {
-            // Activity is being created anew. No prior saved
-            // instance state information available in Bundle object.
-            Log.d(TAG, "onCreate(): activity created anew");
+            Log.d(TAG, "onCreate(): activity created a new");
         }
-
     }
 
     /**
@@ -50,9 +43,8 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * those resources for the first time after onCreate().
      */
     @Override
-    protected void onStart() {
-        // Always call super class for necessary
-        // initialization/implementation.
+    protected void onStart()
+    {
         super.onStart();
         Log.d(TAG, "onStart() - the activity is about to become visible");
     }
@@ -66,10 +58,8 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * the camera.
      */
     @Override
-    protected void onResume() {
-        // Always call super class for necessary
-        // initialization/implementation and then log which lifecycle
-        // hook method is being called.
+    protected void onResume()
+    {
         super.onResume();
         Log.d(TAG, "onResume() - the activity has become visible (it is now \"resumed\")");
     }
@@ -82,10 +72,8 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * Often used to release exclusive resources.
      */
     @Override
-    protected void onPause() {
-        // Always call super class for necessary
-        // initialization/implementation and then log which lifecycle
-        // hook method is being called.
+    protected void onPause()
+    {
         super.onPause();
         Log.d(TAG, "onPause() - another activity is taking focus (this activity is about to be \"paused\")");
     }
@@ -96,10 +84,8 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * activity is killed.
      */
     @Override
-    protected void onStop() {
-        // Always call super class for necessary
-        // initialization/implementation and then log which lifecycle
-        // hook method is being called.
+    protected void onStop()
+    {
         super.onStop();
         Log.d(TAG, "onStop() - the activity is no longer visible (it is now \"stopped\")");
     }
@@ -109,10 +95,8 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * a call to onStart() and onResume().
      */
     @Override
-    protected void onRestart() {
-        // Always call super class for necessary
-        // initialization/implementation and then log which lifecycle
-        // hook method is being called.
+    protected void onRestart()
+    {
         super.onRestart();
         Log.d(TAG, "onRestart() - the activity is about to be restarted()");
     }
@@ -123,10 +107,8 @@ public abstract class LifecycleLoggingActivity extends AppCompatActivity {
      * hosting process
      */
     @Override
-    protected void onDestroy() {
-        // Always call super class for necessary
-        // initialization/implementation and then log which lifecycle
-        // hook method is being called.
+    protected void onDestroy()
+    {
         super.onDestroy();
         Log.d(TAG, "onDestroy() - the activity is about to be destroyed");
     }
